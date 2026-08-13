@@ -70,6 +70,34 @@ Workflow({ scriptPath: "~/.claude/workflows/dev-team.js",
 
 ---
 
+## 💸 Cost control & 🧠 memory
+
+The team is designed to be economical without dumbing down the work that matters.
+
+**Token tiering (automatic).** Hard reasoning runs on the strong model (coder, security, hacker, gate); mechanical/verification work runs on cheaper, faster models at lower effort (research, design, review, tester, deploy, scribe). Override per role:
+
+```js
+args: {
+  task: "…",
+  models: { tester: "haiku", researcher: "sonnet", coder: "opus" }, // per-role model
+  effort: { hacker: "max" },                                        // per-role effort
+}
+```
+
+**Skip what a change doesn't need (automatic).** The manager flags each task:
+- `needsDesign` — the **design** phase only runs for UI-touching work.
+- `securitySensitive` — the expensive **red-team (hacker)** only runs when the change touches auth / money / tenants / public endpoints / URL-fetch / files / AI-tools. Force it always-on with `args.alwaysRedTeam: true`.
+
+Plus `maxIterations` caps the fix-loop. A small internal refactor might run ~4 agents; a security-sensitive feature runs the full crew.
+
+**Memory (per project).** The team keeps a `.dev-team/memory.md` in your project:
+- the **researcher reads it first**, so it doesn't re-discover known facts (conventions, reusable helpers, gotchas) → cheaper and smarter every run;
+- a cheap **scribe** appends durable one-line learnings at the end.
+
+Disable with `args.memory: false`, or point elsewhere with `args.memoryFile`. Tip: add `.dev-team/` to your project's `.gitignore` (or commit it to share the team's memory with your repo). No secrets are written to it.
+
+---
+
 ## 🔑 Optional design/research helpers (bring your own key)
 
 Two optional "members" for visual design and ideation. **Keys are never stored in this repo** — the helpers read them from local, git-ignored files or environment variables.

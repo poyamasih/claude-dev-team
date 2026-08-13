@@ -32,7 +32,12 @@ Workflow({
   args: {
     task: "<what to build or fix, in one clear sentence>",
     context: "<relevant files, prior findings, invariants — e.g. 'do not rename X'>",
-    maxIterations: 2
+    maxIterations: 2,
+    // optional cost/behavior controls:
+    // deploy: false,            // true = ship after PASS (needs explicit human intent)
+    // alwaysRedTeam: false,     // true = always run the hacker, even on non-security changes
+    // memory: true,             // team memory at .dev-team/memory.md (read first, appended after)
+    // models: { tester: "haiku" }, effort: { hacker: "max" }  // per-role overrides
   }
 })
 ```

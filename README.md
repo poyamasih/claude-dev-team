@@ -26,7 +26,7 @@ The manager will not PASS a change that touches auth / tenants / money / public 
 ## Install
 
 ```bash
-git clone https://github.com/<you>/claude-dev-team.git
+git clone https://github.com/poyamasih/claude-dev-team.git
 cd claude-dev-team
 bash scripts/install.sh          # macOS / Linux / Git-Bash on Windows
 #   …or on Windows PowerShell:

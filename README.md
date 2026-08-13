@@ -77,8 +77,10 @@ Two optional "members" for visual design and ideation. **Keys are never stored i
 To enable one, drop your key into the file (or export the env var):
 
 ```bash
-echo "YOUR_KEY_HERE" > ~/.claude/gemini_design.key   # gitignored, stays local
+printf '%s' 'YOUR_KEY_HERE' > ~/.claude/gemini_design.key   # gitignored, stays local
 ```
+
+📖 **Full step-by-step guide — where to get each key, how to set it, verify it, and rotate it: [`docs/API-KEYS.md`](docs/API-KEYS.md).**
 
 If no key is present, the team still runs fully — it just skips those optional helpers. The core team (researcher/coder/security/hacker/tester/manager) needs **no** API key beyond your normal Claude Code setup.
 

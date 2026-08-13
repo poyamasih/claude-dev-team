@@ -11,13 +11,18 @@ A drop-in **multi-agent software team** for [Claude Code](https://claude.com/cla
 | Member | Role | Writes code? |
 |---|---|---|
 | 🔍 **researcher** | Investigates the codebase + prior art / best practices / docs / advisories. Grounds every claim to a source. | ❌ |
-| 📋 **manager** | Divides the work into a concrete spec, then **gates** the result — verifies claims against the real files, catches stubs/lies/laziness, and demands a report from everyone. | ❌ |
+| 📋 **manager** | Divides the work into a concrete spec (and decides if design is needed), then **gates** the result — verifies claims against the real files, catches stubs/lies/laziness, and demands a report from everyone. | ❌ |
+| 🎨 **designer** | Turns UI-touching work into a concrete visual + UX spec (layout, states, tokens, motion, responsive, a11y) before code. Skips itself for backend tasks. | ❌ |
 | 🟢 **coder** | The **only** member who writes code. Implements the spec directly in the project — minimal, complete, no stubs — and never deploys. | ✅ |
+| 🟣 **code-reviewer** | Non-security quality review: logic correctness, edge cases, performance, duplication, error handling, readability. | ❌ |
 | 🔵 **security** | Blue team. Reviews the change for weaknesses and specifies the fix. | ❌ |
 | 🔴 **hacker** | Red team. Actually tries to break what security cleared, with real PoCs. If it breaks in, security closes it and the hacker re-attacks — **loop until a clean round**. | ❌ |
 | 🟢 **tester** | Runs the real build / vet / tests and reports the actual output — never a claimed pass. | ❌ |
+| 🚀 **deployer** | *Optional.* Ships + smoke-tests **only** after the gate passes and you explicitly authorize it; rolls back on failure. | ❌ |
 
-**Pipeline:** `research → plan → build → (security ⇄ hacker) + test → gate → 🔁 fix-loop until PASS`
+**Pipeline:** `research → plan → (design) → build → (review + security ⇄ hacker + test) → gate → 🔁 fix-loop until PASS → (deploy)`
+
+The **design** phase runs only when the manager flags UI work; the **deploy** phase runs only when you pass `deploy: true` and the gate passed.
 
 The manager will not PASS a change that touches auth / tenants / money / public endpoints / URL-fetch / AI-tools until the **hacker returns a zero-breach round** and the **build is green**.
 

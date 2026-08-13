@@ -1,6 +1,6 @@
 # 🧑‍💻 Claude Dev Team
 
-A drop-in **multi-agent software team** for [Claude Code](https://claude.com/claude-code). One prompt in — a shipped, verified change out. A **manager** divides the work, a **coder** writes the real code, and **researcher / security / hacker / tester** investigate, attack, and prove it — looping automatically until it passes.
+A drop-in **multi-agent software team** for [Claude Code](https://claude.com/claude-code). One prompt in — a shipped, verified change out. A **manager** divides the work, a **coder** writes the real code, and a crew of specialists — **researcher, designer, code-reviewer, security, hacker, tester** (+ optional **deployer**) — investigate, attack, and prove it, looping automatically until it passes.
 
 > Built and battle-tested on a real production backend: in its first run it found a **live, unauthenticated critical SSRF** on a deployed API, then fixed it and proved the fix — end to end, with no human writing code. See [`docs/example-ssrf.md`](docs/example-ssrf.md).
 
@@ -39,7 +39,7 @@ bash scripts/install.sh          # macOS / Linux / Git-Bash on Windows
 ```
 
 The installer copies:
-- `agents/*.md`   → `~/.claude/agents/`   (the 6 team members)
+- `agents/*.md`   → `~/.claude/agents/`   (the 9 team members)
 - `workflows/dev-team.js` → `~/.claude/workflows/`  (the pipeline)
 - `tools/*`       → `~/.claude/tools/`     (optional design/research helpers)
 
@@ -57,13 +57,13 @@ Inside Claude Code, just describe the work and ask the team to run:
 Use the dev-team to add an "out of service" state to tables so orders can't be opened on them.
 ```
 
-Claude runs the `dev-team` workflow: research → plan → code → security/hacker/test → gate, looping until it passes. It **edits real code and does not deploy** — you review the `git diff` and deploy yourself.
+Claude runs the `dev-team` workflow: research → plan → (design) → code → review + security/hacker + test → gate, looping until it passes. It **edits real code and does not deploy** — you review the `git diff` and deploy yourself.
 
 Run it directly as a workflow (advanced):
 
 ```js
 Workflow({ scriptPath: "~/.claude/workflows/dev-team.js",
-           args: { task: "…", context: "…", maxIterations: 2 } })
+           args: { task: "…", context: "…", maxIterations: 2, deploy: false } })
 ```
 
 > Multi-agent workflows spawn several sub-agents and use real tokens — Claude Code will ask you to opt in before running one.
@@ -87,7 +87,7 @@ printf '%s' 'YOUR_KEY_HERE' > ~/.claude/gemini_design.key   # gitignored, stays 
 
 📖 **Full step-by-step guide — where to get each key, how to set it, verify it, and rotate it: [`docs/API-KEYS.md`](docs/API-KEYS.md).**
 
-If no key is present, the team still runs fully — it just skips those optional helpers. The core team (researcher/coder/security/hacker/tester/manager) needs **no** API key beyond your normal Claude Code setup.
+If no key is present, the team still runs fully — it just skips those optional helpers. The core team (researcher, manager, designer, coder, code-reviewer, security, hacker, tester, deployer) needs **no** API key beyond your normal Claude Code setup.
 
 ---
 

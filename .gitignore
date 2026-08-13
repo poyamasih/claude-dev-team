@@ -1,0 +1,28 @@
+# ── SECRETS: never commit API keys or credentials ─────────────────────────
+# The tools read keys from these files (or env vars) at runtime — the files
+# themselves must stay LOCAL and are intentionally ignored here.
+*.key
+*.pem
+*.p12
+*.pfx
+gemini_design.key
+stitch.key
+.env
+.env.*
+*.local.json
+settings.local.json
+secrets.*
+credentials.*
+*_token
+*.token
+
+# ── OS / editor cruft ─────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*~
+
+# ── node (only if someone installs the Stitch SDK next to the helper) ──────
+node_modules/
+package-lock.json
